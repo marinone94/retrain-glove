@@ -13,8 +13,8 @@ class FeatureProcessor():
     def __init__(self, features = None):
         self.data_path   = r'./data//'
         self.corpus_path = r'./glove//'
-        self.post_path = ''.join([self.data_path, 'Posts_fake.xml'])
-        self.tags_path = ''.join([self.data_path, 'Tags_fake.xml'])
+        self.post_path = ''.join([self.data_path, 'Posts.xml'])
+        self.tags_path = ''.join([self.data_path, 'Tags.xml'])
         self.corpus    = ''.join([self.corpus_path, 'corpus.txt'])
         try: 
             self.disfluencies = features['disfluencies']
