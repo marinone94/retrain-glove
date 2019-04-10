@@ -4,9 +4,9 @@ Retrain GloVe:
 - Make it                              : cd glove && make
 - Create folder "data"                 : cd ..
                                        : mkdir data
+                                       : cd data
 - Download and unzip data              :
-- Rename posts and tags xml files      : cd data
-                                       : mv ... posts.xml
+- Rename posts and tags xml files      : mv ... posts.xml
                                        :
 - changes to glove/demo.sh             : Remove the script from if to fi after 'make'. Replace the CORPUS name with your file name 'corpus.txt' There is another if loop at the end of file 'demo.sh':(if [ "$CORPUS" = 'text8' ]; then) -->Replace text8 with you file name.
 
