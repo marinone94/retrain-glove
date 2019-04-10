@@ -37,7 +37,7 @@ class FeatureProcessor():
     def create_corpus(self):
         
         #load data
-        with open(self.post_path, 'r', encoding="utf8") as f:
+        with open(self.post_path, 'r', encoding='utf8') as f:
             posts_strings = f.readlines()[2:-1]
 #        with open(self.tags_path, 'r') as f:
 #            tags_strings = f.readlines()[2:-1]
@@ -53,7 +53,7 @@ class FeatureProcessor():
         #join     
         corpus = ''.join(corpus)
         #write to corpus.txt
-        with open(self.corpus, 'w', encoding="utf8") as f:
+        with open(self.corpus, 'w', encoding='utf8') as f:
             f.write(corpus)
             
         return True
