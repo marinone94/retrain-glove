@@ -5,8 +5,8 @@ Created on Wed Apr 10 10:25:01 2019
 @author: Emilio.Marinone
 """
 
-from xml.etree import cElementTree as ET
 import re
+import os
 
 class FeatureProcessor():
     
@@ -23,7 +23,7 @@ class FeatureProcessor():
             self.init         = features['init']
             self.end          = features['end']
         except:
-            raise RunTimeError('FeatureProcessor not instantiated correctly, see Class notes')
+            print('FeatureProcessor not instantiated correctly, see Class notes')
         
     def _body_cleaner(self, bad_body):
         urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', bad_body)
@@ -60,21 +60,22 @@ class FeatureProcessor():
             
         return True
 		
-	def create_w2v(self):
+    def create_w2v(self):
 	
-		with open(self.output, 'r', encoding='utf8') as f:
+        with open(self.output, 'r', encoding='utf8') as f:
             output = f.readlines()
-		c = len(output[0].split()) - 1 #(word 0.12 0.23 0.35)
-		r = len(output)
-		
-		first_line = str(r) + ' ' + str(c) + '\n'
-		joined_corpus = ''.join(output)
-		file = first_line + joined_corpus
-		
-		with open(self.w2v, 'w', encoding='utf8') as f:
-			f.write(file)
-			
-		return True
+        
+        c = len(output[0].split()) - 1 #(word 0.12 0.23 0.35)
+        r = len(output)
+    		
+        first_line = str(r) + ' ' + str(c) + '\n'
+        joined_corpus = ''.join(output)
+        file = first_line + joined_corpus
+    		
+        with open(self.w2v, 'w', encoding='utf8') as f:
+            f.write(file)
+    			
+        return True
 
 features = {'disfluencies': ["&lt;", "p&gt;", "&quot;", "&#xA;", "/p&gt;", "href", "//blockquote&gt"], 'init': 'Body="','end': '" OwnerUserId'}  
 feat = FeatureProcessor(features = features)
