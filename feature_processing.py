@@ -13,9 +13,11 @@ class FeatureProcessor():
     def __init__(self, features = None):
         self.data_path   = r'./data//'
         self.corpus_path = r'./glove//'
-        self.post_path = ''.join([self.data_path, 'Posts.xml'])
+        self.post_path = ''.join([self.data_path, 'Posts_small.xml'])
         self.tags_path = ''.join([self.data_path, 'Tags.xml'])
-        self.corpus    = ''.join([self.corpus_path, 'corpus.txt'])
+        self.corpus    = ''.join([self.corpus_path, 'corpus_small.txt'])
+		self.output    = ''.join([self.corpus_path, 'output_small.txt'])
+		self.w2v	   = ''.join([self.corpus_path, 'w2v_small.txt'])
         try: 
             self.disfluencies = features['disfluencies']
             self.init         = features['init']
@@ -57,12 +59,31 @@ class FeatureProcessor():
             f.write(corpus)
             
         return True
+		
+	def create_w2v(self):
+	
+		with open(self.output, 'r', encoding='utf8') as f:
+            output = f.readlines()
+		c = len(output[0].split()) - 1 #(word 0.12 0.23 0.35)
+		r = len(output)
+		
+		first_line = str(r) + ' ' + str(c) + '\n'
+		joined_corpus = ''.join(output)
+		file = first_line + joined_corpus
+		
+		with open(self.w2v, 'w', encoding='utf8') as f:
+			f.write(file)
+			
+		return True
 
 features = {'disfluencies': ["&lt;", "p&gt;", "&quot;", "&#xA;", "/p&gt;", "href", "//blockquote&gt"], 'init': 'Body="','end': '" OwnerUserId'}  
 feat = FeatureProcessor(features = features)
-print(feat.create_corpus())
 
-
-
-        
+#
+if os.path.exist(feat.output):
+	print(feat.create_w2v)
+else:
+	#if we don't have an output, we should first create a corpus and train
+	print(feat.create_corpus())
+      
         
