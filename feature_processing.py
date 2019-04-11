@@ -6,7 +6,7 @@ Created on Wed Apr 10 10:25:01 2019
 """
 
 import re
-import os
+#import os
 
 class FeatureProcessor():
     
@@ -64,19 +64,19 @@ class FeatureProcessor():
 	
         with open(self.output, 'r', encoding='utf8') as f:
             output = f.readlines()
-	print(output[:5])
+        print(output[:5])
 	
-	c = len(output[0].split()) - 1 #(word 0.12 0.23 0.35)
-	r = len(output)
+        c = len(output[0].split()) - 1 #(word 0.12 0.23 0.35)
+        r = len(output)
 	
-	first_line = str(r) + ' ' + str(c) + '\n'
-	print(first_line)
-	joined_corpus = ''.join(output)
-	file = first_line + joined_corpus
+        first_line = str(r) + ' ' + str(c) + '\n'
+        print(first_line)
+        joined_corpus = ''.join(output)
+        file = first_line + joined_corpus
 	
-	with open(self.w2v, 'w', encoding='utf8') as f:
-	    f.write(file)
-	return True
+        with open(self.w2v, 'w', encoding='utf8') as f:
+            f.write(file)
+        return True
 
 features = {'disfluencies': ["&lt;", "p&gt;", "&quot;", "&#xA;", "/p&gt;", "href", "//blockquote&gt"], 'init': 'Body="','end': '" OwnerUserId'}  
 feat = FeatureProcessor(features = features)
