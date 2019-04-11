@@ -15,9 +15,9 @@ class FeatureProcessor():
         self.corpus_path = r'./glove//'
         self.post_path = ''.join([self.data_path, 'Posts_small.xml'])
         self.tags_path = ''.join([self.data_path, 'Tags.xml'])
-        self.corpus    = ''.join([self.corpus_path, 'corpus_small.txt'])
-        self.output    = ''.join([self.corpus_path, 'output_small.txt'])
-        self.w2v	   = ''.join([self.corpus_path, 'w2v_small.txt'])
+        self.corpus    = ''.join([self.corpus_path, 'corpus.txt'])
+        self.output    = ''.join([self.corpus_path, 'vectors.txt'])
+        self.w2v	   = ''.join([self.corpus_path, 'w2v.txt'])
         try: 
             self.disfluencies = features['disfluencies']
             self.init         = features['init']
@@ -64,27 +64,28 @@ class FeatureProcessor():
 	
         with open(self.output, 'r', encoding='utf8') as f:
             output = f.readlines()
-        
-        c = len(output[0].split()) - 1 #(word 0.12 0.23 0.35)
-        r = len(output)
-    		
-        first_line = str(r) + ' ' + str(c) + '\n'
-        joined_corpus = ''.join(output)
-        file = first_line + joined_corpus
-    		
-        with open(self.w2v, 'w', encoding='utf8') as f:
-            f.write(file)
-    			
-        return True
+	print(output[:5])
+	
+	c = len(output[0].split()) - 1 #(word 0.12 0.23 0.35)
+	r = len(output)
+	
+	first_line = str(r) + ' ' + str(c) + '\n'
+	print(first_line)
+	joined_corpus = ''.join(output)
+	file = first_line + joined_corpus
+	
+	with open(self.w2v, 'w', encoding='utf8') as f:
+	    f.write(file)
+	return True
 
 features = {'disfluencies': ["&lt;", "p&gt;", "&quot;", "&#xA;", "/p&gt;", "href", "//blockquote&gt"], 'init': 'Body="','end': '" OwnerUserId'}  
 feat = FeatureProcessor(features = features)
 
-#
-if os.path.exist(feat.output):
-	print(feat.create_w2v)
-else:
+#if we have vectors.txt the model has already been trained and we can create the correspondent w2v format required by Gensim
+#if os.path.exists(feat.output):
+print(feat.create_w2v)
+#else:
 	#if we don't have an output, we should first create a corpus and train
-	print(feat.create_corpus())
+#	print(feat.create_corpus())
       
         
