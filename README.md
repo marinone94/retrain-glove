@@ -1,4 +1,4 @@
-Retrain GloVe on the corpus you prefer from the stackexchange archive:
+Retrain GloVe on the corpus you prefer from the stackexchange archive (https://archive.org/download/stackexchange/):
 
 - Clone GloVe repo inside retrain-glove: git clone http://github.com/stanfordnlp/glove
 - Make it                              : cd glove && make
