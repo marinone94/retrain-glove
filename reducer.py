@@ -19,11 +19,11 @@ class Reducer():
         if input_file == '':
             self.input_file = ''.join([self.path, 'Posts.xml'])
         else:
-            self.input_file = ''.join([self.paht, input_file])
+            self.input_file = ''.join([self.path, input_file])
         if output_file == '':
             self.output_file = ''.join([self.path, 'Posts_small.xml'])
         else:
-            self.output_file = ''.join([self.paht, output_file])
+            self.output_file = ''.join([self.path, output_file])
         if init < 1 or type(init) != int:
             self.init = 1
         else:
