@@ -17,17 +17,17 @@ class Reducer():
         else:
             self.path = path
         if input_file == '':
-            self.input_file = ''.join([self.paht, 'Posts.xml'])
+            self.input_file = ''.join([self.path, 'Posts.xml'])
         else:
             self.input_file = ''.join([self.paht, input_file])
         if output_file == '':
-            self.output_file = ''.join([self.paht, 'Posts_small.xml'])
+            self.output_file = ''.join([self.path, 'Posts_small.xml'])
         else:
             self.output_file = ''.join([self.paht, output_file])
         if init < 1 or type(init) != int:
             self.init = 1
         else:
-            self.init
+            self.init = init
         if lines < 1 or type(lines) != int: 
             self.lines = 10
         else:
