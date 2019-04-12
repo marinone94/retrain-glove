@@ -38,7 +38,7 @@ class Reducer():
         file = []
         with open(self.input_file, 'r', encoding='utf8') as f:
             for row in islice(f, self.init -1, self.init + self.lines):
-                file.append(row.strip())
+                file.append(row.strip() + '\n')
         
         joined_file = ''.join(file)
         with open(self.output_file, 'w', encoding='utf8') as f:

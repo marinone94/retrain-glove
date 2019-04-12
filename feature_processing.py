@@ -43,7 +43,8 @@ class FeatureProcessor():
             posts_strings = f.readlines()[2:-1]
 #        with open(self.tags_path, 'r') as f:
 #            tags_strings = f.readlines()[2:-1]
-    
+#        if len(posts_strings) > 1:
+#            posts_strings = posts_strings[2:-1]
         corpus = []
         for post in posts_strings:
             i_idx = post.rfind(self.init) + len(self.init)
