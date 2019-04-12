@@ -7,6 +7,8 @@ Created on Wed Apr 10 10:25:01 2019
 
 import re
 import os
+from nltk.corpus import stopwords
+from nltk.tokenize import sent_tokenize, word_tokenize
 
 class FeatureProcessor():
     
@@ -24,7 +26,9 @@ class FeatureProcessor():
             self.end          = features['end']
         except:
             print('FeatureProcessor not instantiated correctly, see Class notes')
-        
+			
+        self.stopwords = set(stopwords.words('english'))
+
     def _body_cleaner(self, bad_body):
         urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', bad_body)
         #extended_disfluencies = self.disfluencies
@@ -32,10 +36,20 @@ class FeatureProcessor():
             bad_body = bad_body.replace(url, "")
         for el in self.disfluencies:
             bad_body = bad_body.replace(el, "")
+		bad_body = self._preprocess(bad_body)
         #add newline before returning cleaned body    
         return ''.join([bad_body, '\n'])
         
-        
+    def _preprocess(self, bad_body):
+		words = word_tokenize(bad_body)
+		list_words = []
+		for word in words:
+			if word.lower() not in self.stopwords:
+				list_words.append(word.lower())
+		
+		return ' '.join(list_words)
+		
+	
     def create_corpus(self):
         
         #load data
