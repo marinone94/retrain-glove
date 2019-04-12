@@ -8,14 +8,13 @@ Created on Wed Apr 10 10:25:01 2019
 import re
 import os
 from nltk.corpus import stopwords
-from nltk.tokenize import sent_tokenize, word_tokenize
-import re
+from nltk.tokenize import word_tokenize
 from bs4 import BeautifulSoup as BS
 
 class FeatureProcessor():
     
     def __init__(self, features = None):
-		self.cleanr = re.compile('<.*?>')
+        self.cleanr = re.compile('<.*?>')
         self.data_path   = r'./data/'
         self.corpus_path = r'./glove/'
         self.post_path = ''.join([self.data_path, 'Posts_small.xml'])
@@ -37,21 +36,21 @@ class FeatureProcessor():
         #extended_disfluencies = self.disfluencies
         for url in urls:
             bad_body = bad_body.replace(url, "")
-		semi_clean = str(BS(text,"html.parser").text)
-		clean_with_n = re.sub(cleanr, '', semi_clean)
-		clean = clean_with_n.replace('\n', ' ')
-		low_no_stopwords = self._preprocess(clean)
+        semi_clean = str(BS(bad_body,"html.parser").text)
+        clean_with_n = re.sub(self.cleanr, '', semi_clean)
+        clean = clean_with_n.replace('\n', ' ')
+        low_no_stopwords = self._preprocess(clean)
         #add newline before returning cleaned body    
         return ''.join([low_no_stopwords, '\n'])
         
     def _preprocess(self, bad_body):
-		words = word_tokenize(bad_body)
-		list_words = []
-		for word in words:
-			if word.lower() not in self.stopwords:
-				list_words.append(word.lower())
-		
-		return ' '.join(list_words)
+        words = word_tokenize(bad_body)
+        list_words = []
+        for word in words:
+            if word.lower() not in self.stopwords:
+                list_words.append(word.lower())
+                
+        return ' '.join(list_words)
 		
 	
     def create_corpus(self):
