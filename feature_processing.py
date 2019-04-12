@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 Created on Wed Apr 10 10:25:01 2019
@@ -10,17 +9,20 @@ import re
 import os
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize, word_tokenize
+import re
+from bs4 import BeautifulSoup as BS
 
 class FeatureProcessor():
     
     def __init__(self, features = None):
+		self.cleanr = re.compile('<.*?>')
         self.data_path   = r'./data/'
         self.corpus_path = r'./glove/'
         self.post_path = ''.join([self.data_path, 'Posts_small.xml'])
         self.tags_path = ''.join([self.data_path, 'Tags.xml'])
         self.corpus    = ''.join([self.corpus_path, 'corpus.txt'])
-        self.output    = ''.join([self.corpus_path, 'vectors.txt'])
-        self.w2v	   = ''.join([self.corpus_path, 'w2v.txt'])
+        self.output    = ''.join([self.data_path, 'vectors.txt'])
+        self.w2v	   = ''.join([self.data_path, 'w2v.txt'])
         try: 
             self.disfluencies = features['disfluencies']
             self.init         = features['init']
@@ -35,11 +37,12 @@ class FeatureProcessor():
         #extended_disfluencies = self.disfluencies
         for url in urls:
             bad_body = bad_body.replace(url, "")
-        for el in self.disfluencies:
-            bad_body = bad_body.replace(el, "")
-		bad_body = self._preprocess(bad_body)
+		semi_clean = str(BS(text,"html.parser").text)
+		clean_with_n = re.sub(cleanr, '', semi_clean)
+		clean = clean_with_n.replace('\n', ' ')
+		low_no_stopwords = self._preprocess(clean)
         #add newline before returning cleaned body    
-        return ''.join([bad_body, '\n'])
+        return ''.join([low_no_stopwords, '\n'])
         
     def _preprocess(self, bad_body):
 		words = word_tokenize(bad_body)
@@ -68,7 +71,6 @@ class FeatureProcessor():
             #expand with tags here if needed
             clean_body = self._body_cleaner(bad_body)
             corpus.append(clean_body)
-            posts_strings.pop(0)
         #join     
         corpus = ''.join(corpus)
         #write to corpus.txt
@@ -99,9 +101,9 @@ feat = FeatureProcessor(features = features)
 
 #if we have vectors.txt the model has already been trained and we can create the correspondent w2v format required by Gensim
 if os.path.exists(feat.output):
-    print(feat.create_w2v())
+	print(feat.create_w2v())
 else:
 #	#if we don't have an output, we should first create a corpus and train
-    print(feat.create_corpus())
+	print(feat.create_corpus())
       
         
