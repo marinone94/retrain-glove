@@ -16,7 +16,7 @@ class FeatureProcessor():
         self.post_path = ''.join([self.data_path, 'Posts_small.xml'])
         self.tags_path = ''.join([self.data_path, 'Tags.xml'])
         self.corpus    = ''.join([self.corpus_path, 'corpus.txt'])
-        self.output    = ''.join([self.data_path, 'vectors.txt'])
+        self.output    = ''.join([self.corpus_path, 'vectors.txt'])
         self.w2v	   = ''.join([self.data_path, 'w2v.txt'])
         try: 
             self.disfluencies = features['disfluencies']
