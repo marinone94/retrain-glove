@@ -46,6 +46,6 @@ class Reducer():
             
         return True
     
-reducer = Reducer(lines = 100)
+reducer = Reducer(lines = 1000000)
 print(reducer.reduce())
 

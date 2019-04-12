@@ -11,15 +11,17 @@ class Similarity():
     
     def __init__(self):
         self.w2v = r'./glove/w2v.txt'
-        self.wv = KV.load_word2vec_format(w2v, binary=False)
+        self.wv = KV.load_word2vec_format(self.w2v, binary=False)
         
     def most_similar(self, word='you'):
         if type(word) == str:
-            return wv.most_similar(word)
+            return self.wv.most_similar(word)
         else:
             return None
 
+word = 'c#'
 sim = Similarity()
-print(sim.most_similar('word'))
+print('Searching for most similar words of : ' + word)
+print(sim.most_similar(word))
 
 
