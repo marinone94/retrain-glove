@@ -84,6 +84,7 @@ class FeatureProcessor():
         for el in corpus:
             body_string += corpus.pop(0)
         #write to corpus.txt
+        print('write file')
         with open(self.corpus, 'w', encoding='utf8') as f:
             f.write(corpus)
             
