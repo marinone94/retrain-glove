@@ -7,14 +7,14 @@ Created on Wed Apr 10 10:25:01 2019
 
 import re
 import os
+import nltk
 from nltk.corpus import stopwords
 nltk.download('stopwords')
-from nltk.tokenize import word_tokenize
+#from nltk.tokenize import word_tokenize
 from bs4 import BeautifulSoup as BS
-import nltk
 #nltk.download('stopwords')
 #nltk.download('punkt')
-from nltk.corpus import stopwords
+
 class FeatureProcessor():
     
     def __init__(self, features = None):
@@ -52,9 +52,9 @@ class FeatureProcessor():
         list_words = []
         for word in words:
             if word.lower() not in self.stopwords:
-				temp_word = word.lower()
-				if temp_word[-1] == '.' or temp_word[-1] == ',':
-					temp_word = temp_word[-1]
+                temp_word = word.lower()
+                if temp_word[-1] == '.' or temp_word[-1] == ',':
+                    temp_word = temp_word[-1]
                 list_words.append(temp_word)
                 
         return ' '.join(list_words)
