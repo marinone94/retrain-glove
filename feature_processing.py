@@ -11,7 +11,10 @@ from nltk.corpus import stopwords
 nltk.download('stopwords')
 from nltk.tokenize import word_tokenize
 from bs4 import BeautifulSoup as BS
-
+import nltk
+#nltk.download('stopwords')
+#nltk.download('punkt')
+from nltk.corpus import stopwords
 class FeatureProcessor():
     
     def __init__(self, features = None):
@@ -21,8 +24,8 @@ class FeatureProcessor():
         self.post_path = ''.join([self.data_path, 'Posts_small.xml'])
         self.tags_path = ''.join([self.data_path, 'Tags.xml'])
         self.corpus    = ''.join([self.corpus_path, 'corpus.txt'])
-        self.output    = ''.join([self.data_path, 'vectors.txt'])
-        self.w2v	   = ''.join([self.data_path, 'w2v.txt'])
+        self.output    = ''.join([self.corpus_path, 'vectors.txt'])
+        self.w2v	   = ''.join([self.corpus_path, 'w2v.txt'])
         try: 
             self.disfluencies = features['disfluencies']
             self.init         = features['init']
@@ -45,7 +48,7 @@ class FeatureProcessor():
         return ''.join([low_no_stopwords, '\n'])
         
     def _preprocess(self, bad_body):
-        words = word_tokenize(bad_body)
+        words = bad_body.split()
         list_words = []
         for word in words:
             if word.lower() not in self.stopwords:
@@ -66,6 +69,7 @@ class FeatureProcessor():
 #            tags_strings = f.readlines()[2:-1]
 #        if len(posts_strings) > 1:
 #            posts_strings = posts_strings[2:-1]
+        print('Start building corpus')
         corpus = []
         for post in posts_strings:
             i_idx = post.rfind(self.init) + len(self.init)
