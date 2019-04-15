@@ -6,6 +6,7 @@ Created on Thu Apr 11 16:23:33 2019
 """
 
 from itertools import islice
+from os.path import exists
 
 class Reducer():
     ''' lines number of lines you want to extract, init first line (must be integer)
@@ -39,10 +40,13 @@ class Reducer():
         with open(self.input_file, 'r', encoding='utf8') as f:
             for row in islice(f, self.init -1, self.init + self.lines):
                 file.append(row.strip() + '\n')
-        
         joined_file = ''.join(file)
-        with open(self.output_file, 'w', encoding='utf8') as f:
-            f.write(joined_file)
+        if exists(self.output_file):
+            with open(self.output_file, 'a', encoding='utf8') as f:
+                f.write(joined_file)
+        else:
+            with open(self.output_file, 'w', encoding='utf8') as f:
+                f.write(joined_file)
             
         return True
     
