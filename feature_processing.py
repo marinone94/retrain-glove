@@ -78,8 +78,10 @@ class FeatureProcessor():
             #expand with tags here if needed
             clean_body = self._body_cleaner(bad_body)
             corpus.append(clean_body)
-        #join     
-        corpus = ''.join(corpus)
+        #join removing items to save allocated memory   
+        body_string = ''
+        for el in clean_body:
+            body_string += clean_body.pop(0)
         #write to corpus.txt
         with open(self.corpus, 'w', encoding='utf8') as f:
             f.write(corpus)
