@@ -8,6 +8,7 @@ Created on Wed Apr 10 10:25:01 2019
 import re
 import os
 from nltk.corpus import stopwords
+nltk.download('stopwords')
 from nltk.tokenize import word_tokenize
 from bs4 import BeautifulSoup as BS
 
@@ -48,7 +49,10 @@ class FeatureProcessor():
         list_words = []
         for word in words:
             if word.lower() not in self.stopwords:
-                list_words.append(word.lower())
+				temp_word = word.lower()
+				if temp_word[-1] == '.' or temp_word[-1] == ',':
+					temp_word = temp_word[-1]
+                list_words.append(temp_word)
                 
         return ' '.join(list_words)
 		
