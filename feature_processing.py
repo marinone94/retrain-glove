@@ -79,6 +79,7 @@ class FeatureProcessor():
             clean_body = self._body_cleaner(bad_body)
             corpus.append(clean_body)
         #join removing items to save allocated memory   
+        print('Building single string')
         body_string = ''
         for el in corpus:
             body_string += corpus.pop(0)
